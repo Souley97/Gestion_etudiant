@@ -48,4 +48,37 @@ class AuthController extends Controller
            'message' => 'User created successfully',
         ], 201);
     }
-}
+
+    // login
+
+    public function login(Request $request)
+    {
+        $validator = validator($request->all(), [
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string'],
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                "success" => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $credentials = $request->only('email', 'password');
+        $token = auth()->attempt($credentials);
+        if (!$token) {
+            return response()->json([
+                "success" => false,
+                'message' => 'Informations de connexion invalides'
+            ], 401);
+        }
+
+        $user = auth()->user();
+        return response()->json([
+            "success" => true,
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'user' => $user,
+            'expires_in' => env('JWT_TTL') * 60 . " Seconds",
+        ], 200);
+    }}
