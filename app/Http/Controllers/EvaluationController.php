@@ -110,8 +110,21 @@ class EvaluationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Evaluation $evaluation)
+    public function destroy($id)
     {
-        //
+        // Vérifier si l'évaluation existe
+        $evaluation = Evaluation::find($id);
+
+        if (!$evaluation) {
+            return $this->customJsonResponse("Évaluation inconnue", [], 404);
+        }
+
+        // Supprimer évaluation
+        $evaluation->delete();
+
+        return $this->customJsonResponse("Évaluation supprimée avec succès");
+
+
+
     }
 }
