@@ -54,31 +54,50 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = validator($request->all(), [
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'string'],
             'password' => ['required', 'string'],
         ]);
+
         if ($validator->fails()) {
             return response()->json([
-                "success" => false,
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 422);
         }
 
-        $credentials = $request->only('email', 'password');
-        $token = auth()->attempt($credentials);
-        if (!$token) {
+        $credentials = $request->only(['email', 'password']);
+
+        if (!$token = auth()->guard('api')->attempt($credentials)) {
             return response()->json([
-                "success" => false,
-                'message' => 'Informations de connexion invalides'
+                'message' => 'Invalid login credentials',
             ], 401);
         }
 
-        $user = auth()->user();
         return response()->json([
-            "success" => true,
             'access_token' => $token,
-            'token_type' => 'Bearer',
-            'user' => $user,
-            'expires_in' => env('JWT_TTL') * 60 . " Seconds",
+            'token_type' => 'bearer',
+            'user' => auth()->guard('api')->user(),
+            'expires_in' => auth()->guard('api')->factory()->getTTL() * 60,
+        ]);
+    }
+    // logout
+    public function logout()
+    {
+        auth()->guard('api')->logout();
+
+        return response()->json([
+            'message' => 'Successfully logged out',
         ], 200);
-    }}
+    }
+    // refresh token
+    public function refresh()
+    {
+        return response()->json([
+            'access_token' => auth()->guard('api')->refresh(),
+            'token_type' => 'bearer',
+            'expires_in' => auth()->guard('api')->factory()->getTTL() * 60,
+        ]);
+    }
+
+
+
+}

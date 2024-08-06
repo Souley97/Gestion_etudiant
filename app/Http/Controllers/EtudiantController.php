@@ -13,23 +13,37 @@ class EtudiantController extends Controller
      */
     public function index()
     {
-        //
+        // Voir la liste de tous les étudiants déjà ajoutés
+        $etudiants = Etudiant::all();
+        return $this->customJsonResponse("Liste des etudiant", $etudiants);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreEtudiantRequest $request)
     {
-        //
+        // Ajouter un nouvel étudiant à la base de données avec aupload image
+
+        $etudiant = new Etudiant();
+        $etudiant->fill($request->all());
+
+        // image
+        if ($request->hasFile('photo')) {
+            $imageName = time().'.'.$request->photo->getClientOriginalExtension();
+            $request->photo->move(public_path('images'), $imageName);
+            $etudiant->photo = $imageName;
+        }
+
+        $etudiant->save();
+
+        return $this->customJsonResponse("Etudiant créé avec succès", $etudiant);
+
+
+
+
     }
 
     /**
