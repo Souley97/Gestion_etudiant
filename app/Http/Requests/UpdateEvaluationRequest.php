@@ -11,7 +11,7 @@ class UpdateEvaluationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateEvaluationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'value' => 'numeric|between:0,20',
+            'etudiant_id' => 'exists:etudiants,id',
+            'matiere_id' => 'exists:matieres,id',
         ];
     }
 }

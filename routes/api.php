@@ -33,7 +33,7 @@ Route::post('/refresh', [AuthController::class,'refresh']);
     //apiressource
     Route::post('/evaluations/{etudiantId}/{matiereId}/note', [EvaluationController::class,'storeNote']);
 
-    Route::apiResource('evaluations', EvaluationController::class);
+    Route::apiResource('evaluations', EvaluationController::class)->only('update', 'index', 'destroy','show');
 
 
 // Route::middleware('auth:sanctum')->group(function () {
