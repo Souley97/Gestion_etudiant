@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('photo')->nullable();
             $table->date('date_de_naissance');
-            $table->unsignedBigInteger('classe_id');
-            $table->foreign('classe_id')->references('id')->on('classes')->onDelete('cascade');
+            // $table->unsignedBigInteger('classe_id');
+            // $table->foreign('classe_id')->references('id')->on('classes')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

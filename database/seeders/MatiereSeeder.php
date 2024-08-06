@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
+use App\Models\Matiere;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class MatiereSeeder extends Seeder
 {
@@ -12,6 +14,16 @@ class MatiereSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $matieres = [
+            ['libelle' => 'Algebra', 'date_debut' => Carbon::now()->subMonths(6), 'date_fin' => Carbon::now()->addMonths(6)],
+            ['libelle' => 'Thermodynamique', 'date_debut' => Carbon::now()->subMonths(6), 'date_fin' => Carbon::now()->addMonths(6)],
+            ['libelle' => 'Biochimie', 'date_debut' => Carbon::now()->subMonths(6), 'date_fin' => Carbon::now()->addMonths(6)],
+            ['libelle' => 'Développement Web', 'date_debut' => Carbon::now()->subMonths(6), 'date_fin' => Carbon::now()->addMonths(6)],
+            ['libelle' => 'Génomique', 'date_debut' => Carbon::now()->subMonths(6), 'date_fin' => Carbon::now()->addMonths(6)],
+        ];
+
+        foreach ($matieres as $matiere) {
+            Matiere::create($matiere);
+        }
     }
 }

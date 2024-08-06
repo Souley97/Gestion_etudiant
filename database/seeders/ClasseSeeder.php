@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Classe;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ClasseSeeder extends Seeder
 {
@@ -12,6 +13,11 @@ class ClasseSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $classes = ['Licence 1', 'Licence 2', 'Licence 3'];
+
+        foreach ($classes as $classe) {
+            Classe::create(['nom' => $classe]);
+        };
+
     }
 }
