@@ -22,7 +22,13 @@ class StoreEtudiantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nom' => ['required','string','max:255'],
+            'prenom' => ['required','string','max:255'],
+            'date_naissance' => ['required','date'],
+            'lieu_naissance' => ['required','string','max:255'],
+            'adresse' => ['required','string','max:255'],
+            'telephone' => ['required','string','max:255'],
+            'email' => ['required','email','unique:etudiants'],
         ];
     }
 }
