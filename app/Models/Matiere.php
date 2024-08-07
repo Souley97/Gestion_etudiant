@@ -9,3 +9,5 @@ class Matiere extends Model
 {
     use HasFactory;
 }
+
+

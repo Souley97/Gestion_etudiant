@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('matieres', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
-    $table->date('date_debut');
-    $table->date('date_fin');
+            $table->date('date_debut');
+            $table->date('date_fin');
+            $table->unsignedBigInteger('ue_id');
+            $table->foreign('ue_id')->references('id')->on('ues')->onDelete('cascade');
             $table->timestamps();
         });
     }
