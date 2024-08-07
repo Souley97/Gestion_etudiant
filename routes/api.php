@@ -31,13 +31,18 @@ Route::middleware('api')->group(function () {
     Route::apiResource('etudiants', EtudiantController::class);
 
     // evaluations
-    Route::post('/evaluations/{etudiantId}/{matiereId}/note', [EvaluationController::class,'storeNote']);
+// showNotes
+    Route::get('/etudiants/notes/{etudiantId}', [EtudiantController::class,'showNotes']);
+
+    Route::post('/evaluations/note/{etudiantId}/{matiereId}', [EvaluationController::class,'storeNote']);
+
 
     //apiressource
     Route::apiResource('evaluations', EvaluationController::class)->only('update', 'index', 'destroy','show');
 
 
 });
+
 
 // trashed
 

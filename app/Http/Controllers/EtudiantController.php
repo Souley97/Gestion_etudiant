@@ -62,10 +62,6 @@ class EtudiantController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Etudiant $etudiant)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -125,4 +121,15 @@ class EtudiantController extends Controller
         $etudiants = Etudiant::onlyTrashed()->get();
         return $this->customJsonResponse("Liste des étudiants supprimés", $etudiants);
     }
+
+    // voire les notes d'un etudiant
+    public function showNotes($id){
+        $etudiant = Etudiant::find($id);
+        if (!$etudiant) {
+            return $this->customJsonResponse("Etudiant inconnu", [], 404);
+        }
+        $notes = $etudiant->notes;
+        return $this->customJsonResponse("Notes de l'étudiant", $notes);
+
+}
 }

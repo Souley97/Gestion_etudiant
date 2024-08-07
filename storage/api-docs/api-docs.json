@@ -70,16 +70,6 @@
                 ],
                 "parameters": [
                     {
-                        "in": "path",
-                        "name": "email",
-                        "type": "string"
-                    },
-                    {
-                        "in": "path",
-                        "name": "password",
-                        "type": "string"
-                    },
-                    {
                         "in": "header",
                         "name": "User-Agent",
                         "type": "string"
@@ -90,9 +80,19 @@
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "properties": {}
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
                             },
-                            "example": {}
+                            "example": {
+                                "email": "souleymane@gmail.com",
+                                "password": "password"
+                            }
                         }
                     }
                 }
@@ -333,7 +333,7 @@
                 }
             }
         },
-        "/api/etudiants/": {
+        "/api/etudiants": {
             "post": {
                 "summary": "Ajouter un etudiant",
                 "description": "",
@@ -413,83 +413,35 @@
                                         "type": "string"
                                     },
                                     "photo": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "format": "binary"
                                     },
                                     "date_de_naissance": {
                                         "type": "string"
                                     },
-                                    "deleted_at": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    },
-                                    "created_at": {
-                                        "type": "string"
-                                    },
-                                    "updated_at": {
+                                    "": {
                                         "type": "string"
                                     }
                                 }
                             },
                             "example": {
-                                "nom": "Ndiaye",
-                                "prenom": "Faall",
-                                "adresse": " Malika",
-                                "telephone": "766657278",
-                                "matricule": "MAT202301",
+                                "nom": "ndiaye",
+                                "prenom": "souleymane",
+                                "adresse": "malika",
+                                "telephone": "766676633",
+                                "matricule": "9898988989",
                                 "mot_de_passe": "null",
-                                "email": "jzsouleymane@gmail.com",
-                                "photo": "https://example.com/photos/jean.jpg",
-                                "date_de_naissance": "1999-01-15",
-                                "deleted_at": null,
-                                "created_at": "2024-08-06T12:06:31.000000Z",
-                                "updated_at": "2024-08-06T17:07:01.000000Z"
+                                "email": "jul@gmail.com",
+                                "photo": {
+                                    "type": "string",
+                                    "format": "binary"
+                                },
+                                "date_de_naissance": "1997-12-12",
+                                "": ""
                             }
                         }
                     }
                 }
-            },
-            "get": {
-                "summary": "Voir liste des etudiants",
-                "description": "",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    }
-                },
-                "tags": [
-                    "Etudiant"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ]
             }
         },
         "/api/etudiants/trash": {
@@ -534,10 +486,21 @@
                         "name": "User-Agent",
                         "type": "string"
                     }
-                ]
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            },
+                            "example": {}
+                        }
+                    }
+                }
             }
         },
-        "/api/etudiants/{etudiant}": {
+        "/api/etudiants/{etudiantId}": {
             "delete": {
                 "summary": "Supprimer un etudiant",
                 "description": "",
@@ -584,13 +547,29 @@
                 ],
                 "parameters": [
                     {
+                        "in": "path",
+                        "name": "etudianId",
+                        "type": "string"
+                    },
+                    {
                         "in": "header",
                         "name": "User-Agent",
                         "type": "string"
                     }
-                ]
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            },
+                            "example": {}
+                        }
+                    }
+                }
             },
-            "put": {
+            "patch": {
                 "summary": "Modifier un etudiant",
                 "description": "",
                 "responses": {
@@ -627,6 +606,11 @@
                 ],
                 "parameters": [
                     {
+                        "in": "path",
+                        "name": "etudiantId",
+                        "type": "string"
+                    },
+                    {
                         "in": "header",
                         "name": "User-Agent",
                         "type": "string"
@@ -637,15 +621,116 @@
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "properties": {}
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "prenom": {
+                                        "type": "string"
+                                    },
+                                    "adresse": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "matricule": {
+                                        "type": "string"
+                                    },
+                                    "mot_de_passe": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "photo": {
+                                        "type": "string"
+                                    },
+                                    "date_de_naissance": {
+                                        "type": "string"
+                                    },
+                                    "deleted_at": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "created_at": {
+                                        "type": "string"
+                                    },
+                                    "updated_at": {
+                                        "type": "string"
+                                    }
+                                }
                             },
-                            "example": {}
+                            "example": {
+                                "nom": "Ndiaye",
+                                "prenom": "z",
+                                "adresse": "Malika",
+                                "telephone": "58888888",
+                                "matricule": "09033",
+                                "mot_de_passe": "$2y$12$0hzmAIF9YcLaU9Du3DZlWuBWCkUyKUzNGyBfWL0ZgeY6R9H6F83W6",
+                                "email": "juli@gmail.com",
+                                "photo": "https://example.com/photos/jean.jpg",
+                                "date_de_naissance": "1999-01-15",
+                                "deleted_at": null,
+                                "created_at": "2024-08-07T00:34:44.000000Z",
+                                "updated_at": "2024-08-07T06:54:12.000000Z"
+                            }
                         }
                     }
                 }
             },
             "get": {
                 "summary": "Voir detail d'un etudiant",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Etudiant"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "etudiantId",
+                        "type": "string"
+                    },
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/etudiants/": {
+            "get": {
+                "summary": "Voir liste des etudiants",
                 "description": "",
                 "responses": {
                     "200": {
@@ -688,7 +773,68 @@
                 ]
             }
         },
-        "/api/evaluations/{etudiantId}/{matiereId}/note": {
+        "/api/etudiants/notes/{etudiantId}": {
+            "get": {
+                "summary": "Voir notes d'un etudiant",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Etudiant"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "etudiantId",
+                        "type": "string"
+                    },
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            },
+                            "example": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/evaluations/note/{etudiantId}/{matiereId}": {
             "post": {
                 "summary": "Ajouter note pour un etudiant",
                 "description": "",
@@ -735,14 +881,53 @@
                 ],
                 "parameters": [
                     {
+                        "in": "path",
+                        "name": "etudiantId",
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "matiereId",
+                        "type": "string"
+                    },
+                    {
                         "in": "header",
                         "name": "User-Agent",
                         "type": "string"
                     }
-                ]
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "date": {
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "type": "integer"
+                                    },
+                                    "created_at": {
+                                        "type": "string"
+                                    },
+                                    "updated_at": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "date": "2018-10-06",
+                                "value": 1,
+                                "created_at": "2024-08-07T00:34:44.000000Z",
+                                "updated_at": "2024-08-07T00:34:44.000000Z"
+                            }
+                        }
+                    }
+                }
             }
         },
-        "/api/evaluations/{evaluation}": {
+        "/api/evaluations/{evaluationId}": {
             "delete": {
                 "summary": "Supprimer note pour un étudiant",
                 "description": "",
@@ -789,6 +974,11 @@
                 ],
                 "parameters": [
                     {
+                        "in": "path",
+                        "name": "evaluationId",
+                        "type": "string"
+                    },
+                    {
                         "in": "header",
                         "name": "User-Agent",
                         "type": "string"
@@ -832,11 +1022,33 @@
                 ],
                 "parameters": [
                     {
+                        "in": "path",
+                        "name": "evaluationId",
+                        "type": "string"
+                    },
+                    {
                         "in": "header",
                         "name": "User-Agent",
                         "type": "string"
                     }
-                ]
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "value": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "value": ""
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/evaluations/": {
