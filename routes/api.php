@@ -21,23 +21,25 @@ Route::post('/refresh', [AuthController::class,'refresh']);
 
 
 // middleware authenticated
+Route::middleware('api')->group(function () {
 
+    //logout
     Route::post('/logout', [AuthController::class,'logout']);
+    Route::get('/etudiants/trash', [EtudiantController::class,'trashed']);
 
-    //apiressource
+    //apiressource Etudiants
     Route::apiResource('etudiants', EtudiantController::class);
 
-    //apiressource
-    // Route::apiResource('matieres', MatiereController::class);
-
-    //apiressource
+    // evaluations
     Route::post('/evaluations/{etudiantId}/{matiereId}/note', [EvaluationController::class,'storeNote']);
 
+    //apiressource
     Route::apiResource('evaluations', EvaluationController::class)->only('update', 'index', 'destroy','show');
 
 
-// Route::middleware('auth:sanctum')->group(function () {
+});
 
+// trashed
 
 
 // logout

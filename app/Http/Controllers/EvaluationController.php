@@ -91,7 +91,7 @@ class EvaluationController extends Controller
         $matiere = Matiere::find($evaluation->matiere_id);
 
         if (!$etudiant ||!$matiere) {
-            return $this->customJsonResponse("Élève ou matière inconnu", [], 404);
+            return $this->customJsonResponse("  Etudiant ou matière inconnu", [], 404);
         }
 
         // Modifier note pour étudiant
@@ -99,11 +99,7 @@ class EvaluationController extends Controller
                 $evaluation->save();
 
         return $this->customJsonResponse("Évaluation modifiée avec succès", $evaluation);
-                // Modifier note pour étudiant
-                $evaluation->value = $request->value;
-                $evaluation->save();
 
-        return $this->customJsonResponse("Évaluation modifiée avec succès", $evaluation);
 
     }
 
@@ -122,7 +118,7 @@ class EvaluationController extends Controller
         // Supprimer évaluation
         $evaluation->delete();
 
-        return $this->customJsonResponse("Évaluation supprimée avec succès");
+        return $this->customJsonResponse("Évaluation supprimée avec succès",  200);
 
 
 
