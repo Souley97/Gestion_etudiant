@@ -51,6 +51,8 @@ namespace App\Http\Controllers\Annotations ;
  *                 properties={
  *                     @OA\Property(property="date", type="string"),
  *                     @OA\Property(property="value", type="integer"),
+ *                     @OA\Property(property="matiereId", type="integer"),
+ *                     @OA\Property(property="etudiantId", type="integer"),
  *                     @OA\Property(property="created_at", type="string"),
  *                     @OA\Property(property="updated_at", type="string"),
  *                 },

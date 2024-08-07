@@ -21,7 +21,7 @@ Route::post('/refresh', [AuthController::class,'refresh']);
 
 
 // middleware authenticated
-Route::middleware('api')->group(function () {
+Route::middleware('auth:api')->group(function () {
 
     //logout
     Route::post('/logout', [AuthController::class,'logout']);
